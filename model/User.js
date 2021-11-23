@@ -1,8 +1,30 @@
 const mongoose = require('mongoose');
 
 const UsuarioSchema = mongoose.Schema({
-    nome:  {type: String},
-    status:  {type: String, enum: ['ativo','inatio'], default: 'ativo'}
-},{timestamps:true})
+    nome: {
+        type: String,
+        require: true,
+    },
+    cpf: {
+        type: String,
+        unique: true,
+        require: true,
+    },
+    email: {
+        type: String,
+        unique: true,
+        require: true,
+    },
+    password: {
+        type: String,
+        require: true,
+        select: false, //Não aparecer no array
+    },
+    level: {
+        type: Number
+    }
+})
 
-module.exports = mongoose.model('usuario',UsuarioSchema)
+const User = mongoose.model('Usuario', UsuarioSchema)
+
+module.exports = User

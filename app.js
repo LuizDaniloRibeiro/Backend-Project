@@ -24,7 +24,7 @@ app.listen(PORT, (req, res) => {
 })
 
 //Rotas do App
-app.use("/usuarios", rotasUsuarios)
+app.use('/usuarios', rotasUsuarios)
 
 
 //Rota para tratar erros 404

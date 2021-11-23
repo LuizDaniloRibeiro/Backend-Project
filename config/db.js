@@ -9,7 +9,7 @@ const InicializaMongoServer = async() => {
             useNewUrlParser: true, 
             useUnifiedTopology: true
         })
-        console.log(`Conectado ao MongoDB!`)
+        console.log(`Conectado com sucesso ao MongoDB!`)
     }catch(e){
         console.error(e)
         throw e

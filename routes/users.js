@@ -12,7 +12,7 @@ const User = require('../model/User')
  ****************************/
 
 router.get('/', async(req, res) => {
-    // console.log(User)
+    console.log(User)
     try{
         const users = await User.find()
         res.json(users)
@@ -31,14 +31,34 @@ router.get('/', async(req, res) => {
 
 router.post('/', async(req, res) => {
     try{
-        let usuario = new Usuario(req.body)
+        const usuario = new User(req.body)
         await usuario.save()
         res.send(usuario)
+        console.log(usuario);
     }catch (err){
         return res.status(500).json({
             errors: [{message: `Erro ao salvar o usuario: ${err.message}`}]
         })
     }
 })
+
+
+/*
+ ****************************
+ * PUT /User
+ * Atualizar Usuario
+ ****************************/
+
+ router.put('/', async(req, res) => {
+     try{
+
+     }catch (err){
+         return res.status(500).json({
+             errors: [{message: `Erro ao Atualizar o Usuario`}]
+         })
+     }
+ })
+
+
 
 module.exports = router

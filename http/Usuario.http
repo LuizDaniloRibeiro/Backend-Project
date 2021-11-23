@@ -13,6 +13,9 @@ POST {{baseURL}}/usuarios
 Content-Type: application/json
 
 {
-    "nome":"Danilo",
-    "status":"ativo"
-}
+    "nome":"Kelly",
+    "cpf":"1239864358",
+    "email":"kelly@gmail.com",
+    "password":"kellysenha"
+},
+
