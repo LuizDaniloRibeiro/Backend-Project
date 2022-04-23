@@ -1,5 +1,6 @@
 //TESTE DE REQUISIÇÕES REST
 @baseURL = http://localhost:4000
+@id = 619d068ef455b2ded14c3af4
 
 ###
 //GET - Lista todas os usuarios
@@ -13,9 +14,20 @@ POST {{baseURL}}/usuarios
 Content-Type: application/json
 
 {
-    "nome":"Kelly",
-    "cpf":"1239864358",
-    "email":"kelly@gmail.com",
-    "password":"kellysenha"
-},
+    "nome": "murilo"
+}
+
+
+
+
+###
+//DELETE - Excluir usuario  
+DELETE {{baseURL}}/usuarios/{{id}}
+Content-Type: application/json
+
+
+###
+// PUT - Alterar um usuario
+PUT {{baseURL}}/usuarios/{{id}}
+
 

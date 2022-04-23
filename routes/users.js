@@ -12,7 +12,6 @@ const User = require('../model/User')
  ****************************/
 
 router.get('/', async(req, res) => {
-    console.log(User)
     try{
         const users = await User.find()
         res.json(users)
@@ -32,9 +31,9 @@ router.get('/', async(req, res) => {
 router.post('/', async(req, res) => {
     try{
         const usuario = new User(req.body)
-        await usuario.save()
-        res.send(usuario)
-        console.log(usuario);
+        await usuario.save();
+        res.send(usuario);
+        console.log('AQUI',usuario);
     }catch (err){
         return res.status(500).json({
             errors: [{message: `Erro ao salvar o usuario: ${err.message}`}]
@@ -51,7 +50,9 @@ router.post('/', async(req, res) => {
 
  router.put('/', async(req, res) => {
      try{
-
+        const usuario = await User.findByIdAndUpdate(req.body._id)
+        await usuario.send({ usuario })
+        console.log(usuario);
      }catch (err){
          return res.status(500).json({
              errors: [{message: `Erro ao Atualizar o Usuario`}]
@@ -59,6 +60,29 @@ router.post('/', async(req, res) => {
      }
  })
 
+ /*
+  * ***********************
+  * DELETE /User
+  * Remover Usuário
+  *************************/
+
+ router.delete('/:id', async (req, res) => {
+     await User.findByIdAndRemove(req.params.id)
+     .then((usuario) => {
+         res.send({
+             message: `Usuário ${usuario.nome} removido com sucesso!`,
+         });
+     })
+     .catch((err) => {
+         return res.status(500).send({
+             errors: [
+                 {
+                     message: `Ops! Não foi possível apagar o usuáio!`
+                 },
+             ],
+         });
+     });
+ });
 
 
 module.exports = router
