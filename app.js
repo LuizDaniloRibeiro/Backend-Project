@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json()) //definir que o server fará o parse do JSON
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000;
 
 //rota 
 app.get('/', (req, res) => {

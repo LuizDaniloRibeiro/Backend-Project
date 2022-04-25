@@ -18,13 +18,13 @@ const UsuarioSchema = mongoose.Schema({
     password: {
         type: String,
         require: true,
-        select: false, //Não aparecer no array
+        select: true, //Não aparecer no array
     },
     level: {
         type: Number
     }
 })
 
-const User = mongoose.model('Usuario', UsuarioSchema)
+const User = mongoose.model('usuario', UsuarioSchema)
 
 module.exports = User

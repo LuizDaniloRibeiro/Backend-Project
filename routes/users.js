@@ -33,7 +33,6 @@ router.post('/', async(req, res) => {
         const usuario = new User(req.body)
         await usuario.save();
         res.send(usuario);
-        console.log('AQUI',usuario);
     }catch (err){
         return res.status(500).json({
             errors: [{message: `Erro ao salvar o usuario: ${err.message}`}]
