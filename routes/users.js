@@ -30,7 +30,27 @@ router.get('/', async(req, res) => {
 
 router.post('/', async(req, res) => {
     try{
-        const usuario = new User(req.body)
+        const email = req.body.email;
+        const cpf = req.body.cpf;
+
+        if (await User.findOne({ email }))
+            return res
+            .status(401)
+            .send({error: 'E-mail já existe'})
+        
+        if (await User.findOne({ cpf }))
+            return res
+            .status(400)
+            .send({error: 'CPF já existe'})    
+
+        const novoUsuario = {
+            nome: req.body.nome,
+            cpf: req.body.cpf,
+            email: req.body.email,
+            password: req.body.password,
+            level: req.body.level,
+        };
+        let usuario = new User(novoUsuario);
         await usuario.save();
         res.send(usuario);
     }catch (err){

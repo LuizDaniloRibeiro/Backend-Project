@@ -13,6 +13,15 @@ const User = require('../model/User');
 
 router.post('/', async(req, res) => {
     try{
+        const email = req.body.email;
+
+        if (await User.findOne({ email }))
+            return res
+                .status(400).json({
+                    errors: [{message: `E-mail já existe`}]
+                })
+                
+
         const novoUsuario = {
             nome: req.body.nome,
             cpf: req.body.cpf,

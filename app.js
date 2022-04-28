@@ -4,6 +4,7 @@ require('dotenv').config() //Carrega as variáveis de ambiente
 const InicialazaMongoServer = require('./config/db')
 const rotasUsuarios = require('./routes/users')
 const rotasRegister = require('./routes/register')
+const rotasLogin = require('./routes/login')
 
 
 InicialazaMongoServer(); //Inicializamos o MongoDB
@@ -14,10 +15,10 @@ app.use(cors());
 
 const PORT = process.env.PORT || 4000;
 
-//rota 
+//Rota default
 app.get('/', (req, res) => {
     res.json({
-        mensagem: 'API 100% Funcional',
+        mensagem: 'API 100% Funcional 👏',
         versao: '1.0.0'
     })
 })
@@ -30,6 +31,7 @@ app.listen(PORT, (req, res) => {
 
 //Rotas do App
 app.use('/usuarios', rotasUsuarios)
+app.use('/auth', rotasLogin)
 app.use('/register', rotasRegister)
 
 
@@ -42,13 +44,15 @@ app.use(function(req, res){
 
 
 function logoLog() {
-    console.log(info('\r\n******************************************************************'))
-    console.log(logo(` _______  _______  ___   _______  _______  _______  ___   _______
+    console.log(info('\r\n*****************************************'))
+    console.log(logo(` _______  _______  ___   _______  _______  
   |   _   ||       ||   | |        | |  _______|  |    |  
   |  |_|  ||    _  ||   | |     _  | |  |______   |    |
   |       ||   |_| ||   | |    |_| | |______   |  |    |
   |       ||    ___||   | |    ____|        |  |  |    |______
   |   _   ||   |    |   | |   |       ______|  |  |           |
-  |__| |__||___|    |___| |___|      |_________|  |__________ |      | \r\n`))
-    console.log(info('************************ Serviço REST API ************************'))
+  |__| |__||___|    |___| |___|      |_________|  |__________ |  \r\n`))
+    console.log(info('************* Serviço REST API ****************'))
   }
+
+

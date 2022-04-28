@@ -4,6 +4,7 @@ const UsuarioSchema = mongoose.Schema({
     nome: {
         type: String,
         require: true,
+
     },
     cpf: {
         type: String,
@@ -18,7 +19,8 @@ const UsuarioSchema = mongoose.Schema({
     password: {
         type: String,
         require: true,
-        select: true, //Não aparecer no array
+        select: true,
+         //Não aparecer no array
     },
     level: {
         type: Number
