@@ -8,26 +8,16 @@ GET {{baseURL}}/usuarios
 Content-Type: application/json
 
 
+
 ###
-//POST - Incluir um novo usuario
-POST {{baseURL}}/usuarios
+//POST Login
+POST {{baseURL}}/usuarios/register
 Content-Type: application/json
 
 {
-    "nome": "murilo"
+    "nome": "Luan",
+    "cpf": "48045598736",
+    "email": "luan@gmail.com",
+    "password": "1234567890",
+    "level": "1"
 }
-
-
-
-
-###
-//DELETE - Excluir usuario  
-DELETE {{baseURL}}/usuarios/{{id}}
-Content-Type: application/json
-
-
-###
-// PUT - Alterar um usuario
-PUT {{baseURL}}/usuarios/{{id}}
-
-

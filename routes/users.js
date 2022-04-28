@@ -1,6 +1,9 @@
 // API REST de Usuarios
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const { check, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const router = express.Router();
 
 const User = require('../model/User')
 
@@ -103,5 +106,77 @@ router.post('/', async(req, res) => {
      });
  });
 
-
+ /**
+ * @method - POST
+ * @param - /usuario/login
+ * @description - Login do usuário
+ */
+router.post(
+    "/login",
+    [
+      check("email", "Por favor, informe um e-mail válido").isEmail(),
+      check("password", "Informe uma password com no mínimo 6 caracteres").isLength({
+        min: 6
+      })
+    ],
+    async (req, res) => {
+      const errors = validationResult(req);
+  
+      if (!errors.isEmpty()) {
+        return res.status(200).json({
+          errors: errors.array()
+        });
+      }
+  
+      const { email, password } = req.body;
+      try {
+        let usuario = await User.findOne({
+          email
+        });
+        if (!usuario)
+          return res.status(200).json({
+            errors: [{ msg: "Não existe nenhum usuário com o e-mail informado!" }]
+          });
+  
+        const isMatch = await bcrypt.compare(password, usuario.password);
+        if (!isMatch)
+          return res.status(200).json({
+            errors: [{ msg: "A password informada está incorreta !" }]
+          });
+  
+        const payload = {
+          usuario: {
+            id: usuario._id
+          }
+        };
+  
+        jwt.sign(
+          payload,
+          process.env.SECRET_KEY,
+          {
+            expiresIn: process.env.EXPIRES_IN
+          },
+          (err, token) => {
+            if (err) throw err;
+            res.status(200).json({
+              access_token: token,
+              usuario: {
+                id: usuario._id,
+                nome: usuario.nome,
+                level: usuario.level
+              }
+            });
+          }
+        );
+      } catch (e) {
+        console.error(e);
+        res.status(500).json({
+          errors: [{ msg: `Erro no Servidor: ${e.message}` }]
+        });
+      }
+    }
+  );
+  
+  
+ 
 module.exports = router
