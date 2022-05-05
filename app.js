@@ -3,7 +3,9 @@ const cors = require('cors');
 require('dotenv').config() //Carrega as variáveis de ambiente
 const InicialazaMongoServer = require('./config/db')
 const rotasUsuarios = require('./routes/Usuario')
+const rotasCursos = require('./routes/Cursos')
 
+const pjson = require('./package.json')
 
 InicialazaMongoServer(); //Inicializamos o MongoDB
 
@@ -38,15 +40,20 @@ app.get('/', (req, res) => {
 /* Rotas do Usuário */
 app.use('/usuarios', rotasUsuarios)
 
+/* Rotas para Cadastrar Curso */
+app.use('/cursos', rotasCursos)
+
 app.use(function(req, res, next) {
     res.status(404).json({message: `Desculpe, a rota ${req.originalUrl} não existe`});
 });
 
 //Rotas do App
 app.listen(PORT, (req, res) => {
-    // logoLog()
-    console.log('************* Serviço REST API ****************')
-    console.log(`🖥️ Servidor Web iniciado com sucesso na PORTA ${PORT}!`)
+    logoLog()
+    console.log('\r\n')
+    console.log(`>>>> Serviço iniciado com sucesso!`);
+    console.log(`>>>> PORTA  => ${PORT}`);
+    console.log('\r\n')
 })
 
 
@@ -60,15 +67,16 @@ app.use(function(req, res){
 
 
 function logoLog() {
-    console.log(info('\r\n*****************************************'))
-    console.log(logo(` _______  _______  ___   _______  _______  
+    console.log('******************************************************************')
+    console.log(`    ___   ________   _________    ____  _______  
   |   _   ||       ||   | |        | |  _______|  |    |  
   |  |_|  ||    _  ||   | |     _  | |  |______   |    |
   |       ||   |_| ||   | |    |_| | |______   |  |    |
-  |       ||    ___||   | |    ____|        |  |  |    |______
-  |   _   ||   |    |   | |   |       ______|  |  |           |
-  |__| |__||___|    |___| |___|      |_________|  |__________ |  \r\n`))
-    console.log(info('************* Serviço REST API ****************'))
-  }
+  |       ||    ___||   | |    ____|        |  |  |    |_____
+  |   _   ||   |    |   | |   |       ______|  |  |          |
+  |__| |__||___|    |___| |___|      |_________|  |__________|  \r\n`)
+  console.log('************************ Serviço REST API ************************')
+  console.log('*************************** Versão. ' + pjson.version + ' ************************')
+}
 
 

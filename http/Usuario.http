@@ -1,23 +1,21 @@
 //TESTE DE REQUISIÇÕES REST
 @baseURL = http://localhost:4000
-@id = 619d068ef455b2ded14c3af4
+@id = 6272d2b24f7870dc2f7c65b2
 
 ###
 //GET - Lista todas os usuarios
-GET {{baseURL}}/usuarios
+GET {{baseURL}}/cursos/{{id}}
 Content-Type: application/json
 
 
 
 ###
 //POST Login
-POST {{baseURL}}/usuarios/register
+PUT {{baseURL}}/cursos
 Content-Type: application/json
 
 {
-    "nome": "Luan",
-    "cpf": "48045598736",
-    "email": "luan@gmail.com",
-    "password": "1234567890",
-    "level": "1"
+    "_id":"6272d2b24f7870dc2f7c65b2",
+    "nome":"danilo"
 }
+

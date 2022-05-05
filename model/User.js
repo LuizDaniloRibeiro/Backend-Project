@@ -16,10 +16,7 @@ const UsuarioSchema = mongoose.Schema({
     level: {
         type: Number
     }
-},
-    {
-        timestamps: { createdAt: 'criado_em', updatedAt: 'alterado_em' }
-    }
+}
 )
 
 const User = mongoose.model('usuario', UsuarioSchema)

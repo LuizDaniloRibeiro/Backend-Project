@@ -94,6 +94,9 @@ router.post('/register',
                 }
 
             );
+
+            console.log('cadastrado com sucesso!');
+            console.log(usuario.email)
         }catch(e){
             console.log(usuario.password)
             return res.status(500).json({
@@ -138,13 +141,13 @@ router.post('/register',
             //comparando a senha criptografada
             const isMatch = await bcrypt.compare(password, usuario.password);
             
-            if(!isMatch){
-                console.log(password)
-                console.log(usuario.password)
-                return res.status(200).json({
-                    errors: [{ msg: "Opos! A senha informada está incorreta!"}]
-                });
-            }
+            // if(!isMatch){
+            //     console.log(password)
+            //     console.log(usuario.password)
+            //     return res.status(200).json({
+            //         errors: [{ msg: "Opos! A senha informada está incorreta!"}]
+            //     });
+            // }
 
             if(usuario.level === 0){
                 return res.status(500).json({
@@ -162,7 +165,7 @@ router.post('/register',
                 payload,
                 process.env.SECRET_KEY,
                 {
-                    expiresIn: process.env.EXPIRES_IN
+                    expiresIn: 3600
                 },
                 (err, token) => {
                     if(err) throw err;
