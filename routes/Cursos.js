@@ -36,7 +36,7 @@ router.get('/:id', async (req, res) => {
 // Atualizar o curso pelo ID
 ######################################## */
 
-router.put('/', async(req, res) => {
+router.put('/:id', async(req, res) => {
     try{
         let dados = req.body;
 
@@ -48,7 +48,7 @@ router.put('/', async(req, res) => {
             res.send({message: `Curso ${curso.nome} alterado com sucesso!`});
         }).catch(err => {
             return res.status(500).send({
-                errors: [{ message: `Não foi possível alterar o curso com ID ${req.body._id}` }]
+                errors: [{ message: `Não foi possível alterar o curso com ID ${req.params.idCurso}` }]
             })
         })
         res.json(curso);

@@ -7,6 +7,27 @@ const router = express.Router();
 const Usuario = require("../model/User");
 
 
+//TOKEN JWT
+function verificaJWT(req, res, next) {
+    const token = req.headers['x-access-token'];
+    const tokenFormated = token;
+  
+    if (!token)
+      return res.status(401).json({ auth: false, message: 'No token provided.' });
+  
+    jwt.verify(tokenFormated, tokenSecret, function (err, decoded) {
+      if (err)
+        return res
+          .status(500)
+          .json({ auth: false, message: 'Failed to authenticate token' });
+  
+      req.userId = decoded.id;
+      next();
+    });
+}
+
+
+
 /*
  ****************************
  * GET /User
@@ -49,15 +70,8 @@ router.post('/register',
                 });
             }
     
-            if(await Usuario.findOne({cpf})){
-                return res.status(400).json({
-                    errors: [{ msg: `O CPF informado já pertence a outro usuário!`}]
-                });
-            }
-
             usuario = new Usuario({
                 nome: req.body.nome,
-                cpf: req.body.cpf,
                 email: req.body.email,
                 password: req.body.password,
                 level: req.body.level,
@@ -124,35 +138,24 @@ router.post('/register',
             })
         }
 
-        const { email, password, cpf} = req.body
+        const { email, password} = req.body;
         try{
-            let usuario = await Usuario.findOne({
-                email, 
-                cpf
-            });
+            let usuario = await Usuario.findOne({email});
 
             //verificando usuarios
             if(!usuario){
                 return res.status(200).json({
-                    errors: [{ msg: "Opos! Não existe nenhum usuário com o e-mail ou CPF informado!"}]
+                    errors: [{ msg: "Opos! Não existe nenhum usuário com o e-mail informado!"}]
                 });  
             }
 
+
             //comparando a senha criptografada
             const isMatch = await bcrypt.compare(password, usuario.password);
-            
-            // if(!isMatch){
-            //     console.log(password)
-            //     console.log(usuario.password)
-            //     return res.status(200).json({
-            //         errors: [{ msg: "Opos! A senha informada está incorreta!"}]
-            //     });
-            // }
-
-            if(usuario.level === 0){
+            if (isMatch === false){
                 return res.status(500).json({
-                    errors: [{ msg: 'Opos! Infelizmente esté usuário foi desativado! :('}]
-                })
+                  errors: [{ msg: "A senha informada está incorreta !"}]
+                });
             }
 
             const payload = {
