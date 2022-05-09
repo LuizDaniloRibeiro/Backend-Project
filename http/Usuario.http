@@ -4,18 +4,20 @@
 
 ###
 //GET - Lista todas os usuarios
-GET {{baseURL}}/cursos/{{id}}
+GET {{baseURL}}/usuarios
 Content-Type: application/json
 
 
 
 ###
 //POST Login
-POST {{baseURL}}/usuarios/login
+POST {{baseURL}}/usuarios/register
 Content-Type: application/json
 
 {
+    "nome": "naldo",
     "email":"admin@gmail.com",
-    "password":"admadm"
+    "password":"admadm",
+    "level": 999,
 }
 

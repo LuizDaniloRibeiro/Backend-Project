@@ -77,6 +77,7 @@ router.post('/register',
                 level: req.body.level,
             });
 
+
             //criptografia da senha
             const salt = await bcrypt.genSalt(10); //impede que uma mesma senha tenha resultados iguais
             usuario.password = await bcrypt.hash(password, salt);
@@ -93,7 +94,7 @@ router.post('/register',
                 payload,
                 process.env.SECRET_KEY,
                 {
-                    expiresIn: 3600
+                    expiresIn: 3650
                 },
                 (err, token) => {
                     if(err) throw err;
@@ -110,9 +111,8 @@ router.post('/register',
             );
 
             console.log('cadastrado com sucesso!');
-            console.log(usuario.email)
         }catch(e){
-            console.log(usuario.password)
+            console.log(e)
             return res.status(500).json({
                 errors: [{ msg: `Erro! Houve problema para cadastrar o usuário: ${e.message}`}]
             })
@@ -138,13 +138,17 @@ router.post('/register',
             })
         }
 
+        console.log(req.body)
+
         const { email, password} = req.body;
         try{
             let usuario = await Usuario.findOne({email});
 
+            console.log(usuario)
+
             //verificando usuarios
             if(!usuario){
-                return res.status(200).json({
+                return res.status(500).json({
                     errors: [{ msg: "Opos! Não existe nenhum usuário com o e-mail informado!"}]
                 });  
             }
@@ -177,7 +181,7 @@ router.post('/register',
                         usuario: {
                             id: usuario.id,
                             nome: usuario.nome,
-                            nivel: usuario.level
+                            level: usuario.level
                         }
 
                     });

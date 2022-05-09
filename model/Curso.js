@@ -14,7 +14,7 @@ const CursoSchema = mongoose.Schema({
             type: String,
         },
         nivel: {
-            type: String
+            type: Number
         },
         foto: {
             originalname: {type: String},

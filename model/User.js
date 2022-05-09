@@ -14,8 +14,10 @@ const UsuarioSchema = mongoose.Schema({
         type: String,
     },
     level: {
-        type: Number
+        type: Number,
     }
+},{
+    timetamps: true
 }
 )
 
