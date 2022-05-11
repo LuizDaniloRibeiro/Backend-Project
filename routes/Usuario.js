@@ -61,7 +61,7 @@ router.post('/register',
             });
         }
 
-        const {email, cpf, password} = req.body;
+        const {email, password} = req.body;
 
         try{
             if(await Usuario.findOne({email})){
@@ -70,12 +70,7 @@ router.post('/register',
                 });
             }
     
-            usuario = new Usuario({
-                nome: req.body.nome,
-                email: req.body.email,
-                password: req.body.password,
-                level: req.body.level,
-            });
+            usuario = new Usuario(req.body);
 
 
             //criptografia da senha
@@ -103,7 +98,6 @@ router.post('/register',
                         usuario: {
                             id: usuario_id,
                             nome: usuario.nome,
-                            level: usuario.level
                         }
                     });   
                 }
@@ -181,12 +175,12 @@ router.post('/register',
                         usuario: {
                             id: usuario.id,
                             nome: usuario.nome,
-                            level: usuario.level
                         }
 
                     });
                 }
             );
+
         }catch(err){
             console.log(err);
             res.status(500).json({
@@ -195,6 +189,38 @@ router.post('/register',
         }
     }
 );
+
+/**
+ * @method - POST
+ * @description - Obter informações do usuário atual
+ * @param - /usuarios/access-token
+ */
+
+ router.post("/access-token",  async (req, res) => {
+    try {
+      // O token é enviado junto com a requisição
+      const { access_token } = req.body
+      console.log(access_token)
+      const decoded = jwt.verify(access_token, process.env.SECRET_KEY);
+      const id = decoded.usuario.id
+      try {
+        const usuario = await Usuario.findById(id);
+        res.status(200).json({
+          access_token: access_token,
+          usuario: {
+            id: usuario._id,
+            nome: usuario.nome
+          }
+        });
+      } catch (err) {
+        res.status(500).send({
+          message: `Erro ao obter as informações do Usuário. Erro:${err.message}`
+        });
+      }
+    } catch (e) {
+      res.send(`Erro ao obter o token do usuário: ${e.message}`);
+    }
+  });
 
 module.exports = router;
   

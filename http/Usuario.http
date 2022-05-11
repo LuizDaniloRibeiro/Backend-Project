@@ -11,13 +11,11 @@ Content-Type: application/json
 
 ###
 //POST Login
-POST {{baseURL}}/usuarios/register
+POST {{baseURL}}/usuarios/login
 Content-Type: application/json
 
 {
-    "nome": "naldo",
-    "email":"admin@gmail.com",
+    "email":"adm@gmail.com",
     "password":"admadm",
-    "level": 999,
 }
 
