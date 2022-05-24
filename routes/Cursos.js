@@ -13,7 +13,11 @@ const Cursos = require("../model/Curso");
  router.get('/', async(req, res) => {
     try{
         const curso = await Cursos.find()
+
+        console.log(curso)
+
         res.json(curso)
+
     }catch (err){
         res.status(500).send({
             erros: [{message: `Não foi possivel obter os cursos`}]
@@ -92,8 +96,7 @@ router.post('/register-curso',
                 professor: req.body.professor,
                 categoria: req.body.categoria,
                 descricao: req.body.descricao,
-                nivel: req.body.nivel,
-
+                nivel: req.body.nivel
             });
 
             console.log(curso);
@@ -101,9 +104,9 @@ router.post('/register-curso',
 
             await curso.save();
 
-        }catch(e){
+        }catch(err){
             return res.status(500).json({
-                errors: [{ msg: `Erro! Houve problema para cadastrar o curso: ${e.message}`}]
+                errors: [{ msg: `Erro! Houve problema para cadastrar o curso: ${err}`}]
             })
         }
     }

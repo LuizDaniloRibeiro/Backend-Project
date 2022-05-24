@@ -196,31 +196,31 @@ router.post('/register',
  * @param - /usuarios/access-token
  */
 
- router.post("/access-token",  async (req, res) => {
-    try {
-      // O token é enviado junto com a requisição
-      const { access_token } = req.body
-      console.log(access_token)
-      const decoded = jwt.verify(access_token, process.env.SECRET_KEY);
-      const id = decoded.usuario.id
-      try {
-        const usuario = await Usuario.findById(id);
-        res.status(200).json({
-          access_token: access_token,
-          usuario: {
-            id: usuario._id,
-            nome: usuario.nome
-          }
-        });
-      } catch (err) {
-        res.status(500).send({
-          message: `Erro ao obter as informações do Usuário. Erro:${err.message}`
-        });
-      }
-    } catch (e) {
-      res.send(`Erro ao obter o token do usuário: ${e.message}`);
-    }
-  });
+//  router.post("/access-token",  async (req, res) => {
+//     try {
+//       // O token é enviado junto com a requisição
+//       const { access_token } = req.body
+//       console.log(access_token)
+//       const decoded = jwt.verify(access_token, process.env.SECRET_KEY);
+//       const id = decoded.usuario.id
+//       try {
+//         const usuario = await Usuario.findById(id);
+//         res.status(200).json({
+//           access_token: access_token,
+//           usuario: {
+//             id: usuario._id,
+//             nome: usuario.nome
+//           }
+//         });
+//       } catch (err) {
+//         res.status(500).send({
+//           message: `Erro ao obter as informações do Usuário. Erro:${err.message}`
+//         });
+//       }
+//     } catch (e) {
+//       res.send(`Erro ao obter o token do usuário: ${e.message}`);
+//     }
+//   });
 
 module.exports = router;
   

@@ -15,19 +15,12 @@ const CursoSchema = mongoose.Schema({
         },
         nivel: {
             type: Number
-        },
-        foto: {
-            originalname: {type: String},
-            path: {type: String},
-            size: {type: Number},
-            mimetype: {type: String} 
-
         }
     },{
         timestamps: true
     }
 )
 
-const Cursos = mongoose.model('curso', CursoSchema)
+const Cursos = mongoose.model('cursos', CursoSchema)
 
 module.exports = Cursos
